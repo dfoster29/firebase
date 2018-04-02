@@ -30,12 +30,17 @@ $("#submit").on("click", function() {
   firstTime = $("#first-time").val().trim();
   frequency = $("#frequency").val().trim();
 
-  database.ref().set({
+  database.ref().push({
     trainName: trainName,
     destination: destination,
     firstTime: firstTime,
     frequency: frequency
   });
+
+  $("#train-name").val("");
+  $("#destination").val("");
+  $("#first-time").val("");
+  $("#frequency").val("");
 
 });
 
