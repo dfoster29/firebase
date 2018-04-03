@@ -7,13 +7,13 @@ var config = {
   storageBucket: "",
   messagingSenderId: "147421827773"
 };
+
 firebase.initializeApp(config);
 
 var database = firebase.database();
 
 // Capture Button Click
 $("#submit").on("click", function(event) {
-  // Don't refresh the page!
   event.preventDefault();
 
   // YOUR TASK!!!
@@ -60,11 +60,11 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     console.log(first);
     console.log(freq);
 
-    var nextArrival = moment.unix(firstTime).format("HH:mm");
+    // var nextArrival = moment.unix(firstTime).format("HH:mm");
 
-    // Calculate the months worked using hardcore math
-    // To calculate the months worked
-    var minAway = moment().diff(moment.unix(freq, "X"), "months");
+    // // Calculate the months worked using hardcore math
+    // // To calculate the months worked
+    // var minAway = moment().diff(moment.unix(freq, "X"), "months");
 
     $("#train-table > tbody").append(
       "<tr><td>" +
@@ -72,13 +72,11 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
         "</td><td>" +
         dest +
         "</td><td>" +
-        first +
-        "</td><td>" +
         freq +
         "</td><td>" +
-        nextArrival +
+        "some time" +
         "</td><td>" +
-        minAway +
+        "some minutes" +
         "</td></tr>"
     );
 
