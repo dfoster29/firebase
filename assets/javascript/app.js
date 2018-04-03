@@ -27,7 +27,7 @@ $("#submit").on("click", function(event) {
   var newTrain = {
     name: train,
     destination: dest,
-    firstTime: first,
+    time: first,
     frequency: freq
   };
 
@@ -35,7 +35,7 @@ $("#submit").on("click", function(event) {
 
   console.log(newTrain.name);
   console.log(newTrain.destination);
-  console.log(newTrain.firstTime);
+  console.log(newTrain.time);
   console.log(newTrain.frequency);
 
   $("#train-name").val("");
@@ -52,7 +52,7 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
 
     var train = childSnapshot.val().name;
     var dest = childSnapshot.val().destination;
-    var first = childSnapshot.val().firstTime;
+    var first = childSnapshot.val().time;
     var freq = childSnapshot.val().frequency;
 
     console.log(train);
@@ -60,11 +60,20 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     console.log(first);
     console.log(freq);
 
-    // var nextArrival = moment.unix(firstTime).format("HH:mm");
+    var firstTimeConverted = moment(first, "HH:mm").subtract(1, "years");
+    var currentTime = moment();
+    var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
+    var tRemainder = diffTime % freq;
+    var minAway = freq - tRemainder;
+    console.log("freq" + freq);
+    console.log("tRemainder" + tRemainder);
+    console.log("diffTime" + diffTime);
+    console.log("minAway" + minAway)
+    var nextTrain = moment().add(minAway, "minutes");
+    var nextArrival = moment(nextTrain).format("hh:mm");
 
-    // // Calculate the months worked using hardcore math
-    // // To calculate the months worked
-    // var minAway = moment().diff(moment.unix(freq, "X"), "months");
+    console.log("next arrival is" + nextArrival)
+    console.log("the train is" + minAway)
 
     $("#train-table > tbody").append(
       "<tr><td>" +
@@ -74,9 +83,9 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
         "</td><td>" +
         freq +
         "</td><td>" +
-        "some time" +
+        nextArrival +
         "</td><td>" +
-        "some minutes" +
+        minAway +
         "</td></tr>"
     );
 
