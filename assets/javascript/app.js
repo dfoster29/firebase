@@ -95,3 +95,4 @@ database.ref().on("child_added", function(childSnapshot, prevChildKey) {
     console.log("Errors handled: " + errorObject.code);
   }
 );
+
